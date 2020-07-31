@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.book.dao.BookMapper" >
+  <resultMap id="BaseResultMap" type="com.book.pojo.Book" >
+    <constructor >
+      <idArg column="no" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="type_no" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="pub_time" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="author" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pub_company" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    no, type_no, name, price, pub_time, author, pub_company
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where no = #{no,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from book
+    where no = #{no,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.book.pojo.Book" >
+    insert into book (no, type_no, name, 
+      price, pub_time, author, 
+      pub_company)
+    values (#{no,jdbcType=INTEGER}, #{typeNo,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{pubTime,jdbcType=DATE}, #{author,jdbcType=VARCHAR}, 
+      #{pubCompany,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.book.pojo.Book" >
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="typeNo != null" >
+        type_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="pubTime != null" >
+        pub_time,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="pubCompany != null" >
+        pub_company,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=INTEGER},
+      </if>
+      <if test="typeNo != null" >
+        #{typeNo,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pubTime != null" >
+        #{pubTime,jdbcType=DATE},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="pubCompany != null" >
+        #{pubCompany,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.book.pojo.Book" >
+    update book
+    <set >
+      <if test="typeNo != null" >
+        type_no = #{typeNo,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pubTime != null" >
+        pub_time = #{pubTime,jdbcType=DATE},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="pubCompany != null" >
+        pub_company = #{pubCompany,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where no = #{no,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.book.pojo.Book" >
+    update book
+    set type_no = #{typeNo,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      pub_time = #{pubTime,jdbcType=DATE},
+      author = #{author,jdbcType=VARCHAR},
+      pub_company = #{pubCompany,jdbcType=VARCHAR}
+    where no = #{no,jdbcType=INTEGER}
+  </update>
+  <select id="selectBytypeno" parameterType="integer" resultType="integer">
+    SELECT count(1)
+    FROM book
+    where type_no = #{typeno};
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT no,type_no,name,price,pub_time,author,pub_company
+    from book
+  </select>
+</mapper>
